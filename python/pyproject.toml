@@ -31,3 +31,6 @@ select = ["E", "F", "I", "UP", "B"]
 [tool.mypy]
 python_version = "3.10"
 
+
+[tool.ruff.lint.per-file-ignores]
+"gilded_rose.py" = ["UP031"]
