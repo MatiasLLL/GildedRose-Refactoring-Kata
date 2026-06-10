@@ -3,3 +3,7 @@
 .coverage
 .idea/
 *.iml
+
+__pycache__/
+.pytest_cache/
+.approval_tests_temp/
