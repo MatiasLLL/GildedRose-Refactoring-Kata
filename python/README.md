@@ -1,39 +1,40 @@
-# Gilded Rose starting position in Python
+# Gilded Rose — Python solution
 
-For exercise instructions see [top level README](../README.md)
+Refactoring kata solution. Original requirements: [GildedRoseRequirements.md](../GildedRoseRequirements.md).
 
-Suggestion: create a python virtual environment for this project. See the [documentation](https://docs.python.org/3/library/venv.html)
+## Getting started
 
-## Run the unit tests from the Command-Line
-
-```
-python -m unittest
-```
-
-## Run the TextTest fixture from the Command-Line
-
-For e.g. 10 days:
+Requires Python 3.10+ and [Poetry](https://python-poetry.org/).
 
 ```
-python texttest_fixture.py 10
+make install     # install dependencies
+make test        # run the test suite
+make lint        # ruff check + format check
+make typecheck   # mypy
+make check       # lint + typecheck + test
 ```
 
-You should make sure the command shown above works when you execute it in a terminal before trying to use TextTest (see below).
+## Approach
 
+1. **Safety net first.** Approved the 30-day golden master (ApprovalTests) and wrote
+   characterization tests for every business rule and boundary value, before touching
+   any code.
+2. **Incremental refactoring.** Replaced the nested conditionals with one updater per
+   item category, selected by name; quality bounds (0–50) centralized in two helpers.
+   The golden master guarantees behavior is preserved.
+3. **Conjured items (TDD).** Failing tests first, then a four-line updater: a normal
+   item with a doubled degradation rate. The golden master was re-approved — only the
+   `Conjured Mana Cake` lines changed, as intended.
 
-## Run the TextTest approval test that comes with this project
+## Design notes
 
-There are instructions in the [TextTest Readme](../texttests/README.md) for setting up TextTest. You will need to specify the Python executable and interpreter in [config.gr](../texttests/config.gr). Uncomment these lines:
+- `Item` is untouched, as required by the specification.
+- Conjured items are matched by name prefix, other special items by exact name.
+- Poetry replaces `requirements.txt` for locked, reproducible installs; ruff and mypy
+  keep the code consistent.
+- Single module on purpose: one responsibility, ~80 lines. The first natural split,
+  if more item types appeared, would be a dedicated updaters module.
 
-    executable:${TEXTTEST_HOME}/python/texttest_fixture.py
-    interpreter:python
+## Time spent
 
-## Run the ApprovalTests.Python test
-
-This test uses the framework [ApprovalTests.Python](https://github.com/approvals/ApprovalTests.Python). You will need to install  Run it like this:
-
-```
-python tests/test_gilded_rose_approvals.py
-```
-
-You will need to approve the output file which appears under "approved_files" by renaming it from xxx.received.txt to xxx.approved.txt.
+Approximately 2 hours, including test design, refactoring and tooling setup.

@@ -1,3 +1,5 @@
+.PHONY: install test lint typecheck check
+
 install:
 	poetry install
 
@@ -9,3 +11,5 @@ lint:
 
 typecheck:
 	poetry run mypy gilded_rose.py
+
+check: lint typecheck test
